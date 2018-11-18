@@ -9,7 +9,7 @@ Web Development: JavaScript, Node.js, and React<br>
 Scripting: Python<br>
 Adobe Software: After Effects, Illustrator, Photoshop, Premiere, Audition<br>
 Version Control : Git / Github	<br>
-Hardware Engineering: Microcontroller / Arduino Experience<br>
+Hardware Engineering: Avr / Arduino<br>
 
 
 ### This website sucks
