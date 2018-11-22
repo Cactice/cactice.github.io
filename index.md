@@ -11,7 +11,7 @@ Adobe Software: After Effects, Illustrator, Photoshop, Premiere, Audition<br>
 Version Control : Git / Github	<br>
 Hardware Engineering: Avr / Arduino<br>
 
+### Linkedin
 
-### This website sucks
 
-I know, we all need to start somewhere.
+[a link](www.linkedin.com/in/cactice)
