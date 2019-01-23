@@ -1,7 +1,5 @@
 ## My name is Yuya Kanai
 
-I like to dance.
-
 ### Coding Skills
 
 Mobile App Development: C++, Swift, Objective-C, and React Native<br>
