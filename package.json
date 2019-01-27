@@ -1,29 +1,59 @@
 {
-  "name": "cactice.github.io",
+  "name": "next-webgl",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Example Next.js + WebGL app",
+  "main": "next start",
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "export": "next export",
+    "deploy": "next build && next export && ./scripts/deploy"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Cactice/cactice.github.io.git"
+  "engines": {
+    "node": ">=8",
+    "npm": ">=5",
+    "yarn": ">=1.5"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Cactice/cactice.github.io/issues"
-  },
-  "homepage": "https://github.com/Cactice/cactice.github.io#readme",
-  "dependencies": {
-    "next": "^7.0.2",
-    "react": "^16.7.0",
-    "react-dom": "^16.7.0",
-    "three": "^0.100.0",
-    "three-trackballcontrols": "0.0.7"
+  "keywords": [
+    "next.js",
+    "react",
+    "webgl"
+  ],
+  "contributors": [
+    {
+      "name": "Ivan Aksamentov",
+      "email": "ivan.aksamentov@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "private": true,
+  "dependencies": {},
+  "devDependencies": {
+    "@fortawesome/fontawesome": "^1.1.8",
+    "@fortawesome/fontawesome-free-brands": "^5.0.13",
+    "@fortawesome/fontawesome-free-regular": "^5.0.13",
+    "@fortawesome/fontawesome-free-solid": "^5.0.13",
+    "@fortawesome/fontawesome-svg-core": "^1.2.0-14",
+    "@fortawesome/react-fontawesome": "^0.1.0-11",
+    "@zeit/next-sass": "^0.2.0",
+    "babel-eslint": "^8.2.3",
+    "bootstrap": "^4.1.1",
+    "eslint": "^5.0.0-alpha.3",
+    "eslint-plugin-babel": "^5.1.0",
+    "eslint-plugin-react": "^7.8.2",
+    "lodash": "^4.17.10",
+    "next": "^6.0.3",
+    "next-progressbar": "^1.0.0",
+    "node-sass": "^4.9.0",
+    "npm-check-updates": "^2.14.2",
+    "prop-types": "^15.6.1",
+    "rc-drawer": "^0.4.11",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
+    "react-no-ssr": "^1.1.0",
+    "react-resize-detector": "^2.3.0",
+    "reactstrap": "^6.0.1",
+    "three": "^0.92.0"
   }
 }
