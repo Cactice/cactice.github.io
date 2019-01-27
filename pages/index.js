@@ -1,22 +1,22 @@
-import threeEntryPoint from '../components/threejs/threeEntryPoint';
-import React, { Component } from 'react';
-import dynamic from 'next/dynamic'
-const DynamicComponent = dynamic(import('../components/threejs/threeEntryPoint'))
+import React from 'react'
+import NoSSR from 'react-no-ssr'
 
-export default class Index extends Component {
-  componentDidMount() {
-    threeEntryPoint(this.threeRootElement);
-  }
+import Scene from '../components/Scene'
+import Loading from '../components/Loading'
 
-  render () {
-    return(
-      <div>
-        <div>
-          <p>Hi Next.js</p>
-        </div>
-        <DynamicComponent ref={element => this.threeRootElement = element} />
-      </div>
-    )
-  }
+import '../styles/main.scss'
+
+/**
+ * Implements main page
+ */
+const Index = () => {
+
+  // Wrap WebGL-related components with NoSSR to disable server-side rendering
+  return (
+    <NoSSR onSSR={<Loading/>}>
+      <Scene/>
+    </NoSSR>
+  )
 }
 
+export default Index
