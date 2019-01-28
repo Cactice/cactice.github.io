@@ -57,6 +57,29 @@ class Scene extends React.Component {
     this.cube.position.z = 0
     this.scene.add(this.cube)
 
+
+    var uniforms = {
+      texture1: { type: 't', value: THREE.ImageUtils.loadTexture('UVface2.png') },
+      time: { // float initialized to 0
+        type: 'f',
+        value: 0.0,
+      }
+    }
+
+    var material = new THREE.ShaderMaterial({
+      uniforms: uniforms,
+      vertexShader: vertShader,
+      fragmentShader: fragShader
+    })
+
+    var loader = new THREE.JSONLoader()
+    loader.load( './threejs/me4.json', function ( geometry, materials ) {
+      var json = new THREE.Mesh( geometry, material)
+      json.position.set( 0,100,0)
+      json.scale.set( 100, 100, 100 )
+      scene.add( json );
+    } );
+
     const ambientLight = new THREE.AmbientLight('#ffffff', 0.5)
     this.scene.add(ambientLight)
 
