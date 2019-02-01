@@ -8,7 +8,8 @@ import { Button, Form, InputGroup, Label } from 'reactstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import faForward from '@fortawesome/fontawesome-free-solid/faForward'
 import faBackward from '@fortawesome/fontawesome-free-solid/faBackward'
-
+import {vertShader} from './threejs/vertShader.js'
+import {fragShader} from './threejs/fragShader.js'
 
 /**
  * Implements a 3D scene
@@ -44,41 +45,35 @@ class Scene extends React.Component {
     // This function is called once, after canvas component has been mounted.
     // And WebGLRenderer and WebGLRenderingContext have been created.
 
-    this.material = new THREE.MeshPhongMaterial({
-      color: '#d8d9fd',
-      specular: '#ffffff',
-    })
-
     this.scene = new THREE.Scene()
 
     this.cube = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), this.material)
     this.cube.position.x = 0
     this.cube.position.y = 0
     this.cube.position.z = 0
-    this.scene.add(this.cube)
 
 
     var uniforms = {
-      texture1: { type: 't', value: THREE.ImageUtils.loadTexture('UVface2.png') },
+      texture1: { type: 't', value: THREE.ImageUtils.loadTexture('/static/threejs/UVface2.png') },
       time: { // float initialized to 0
         type: 'f',
         value: 0.0,
-      }
+      },
     }
 
-    var material = new THREE.ShaderMaterial({
+    this.material = new THREE.ShaderMaterial({
       uniforms: uniforms,
       vertexShader: vertShader,
-      fragmentShader: fragShader
+      fragmentShader: fragShader,
     })
-
+    let self = this
     var loader = new THREE.JSONLoader()
-    loader.load( './threejs/me4.json', function ( geometry, materials ) {
+    loader.load( '/static/threejs/me4.json', function ( geometry, materials ) {
       var json = new THREE.Mesh( geometry, material)
-      json.position.set( 0,100,0)
-      json.scale.set( 100, 100, 100 )
-      scene.add( json );
-    } );
+      json.position.set( 0,0,0)
+      json.scale.set( 1, 1, 1 )
+      self.scene.add( json )
+    } )
 
     const ambientLight = new THREE.AmbientLight('#ffffff', 0.5)
     this.scene.add(ambientLight)
@@ -98,7 +93,6 @@ class Scene extends React.Component {
     // Draw your single frame here.
 
     this.cube.rotation.y += 0.01 * this.state.rotationDirection
-
     renderer.render(this.scene, this.camera)
   }
 
