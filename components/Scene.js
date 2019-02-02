@@ -32,7 +32,22 @@ class Scene extends React.Component {
     this.state = {
       rotationDirection: +1, // shows which direction cube spins
     }
+    this.start = Date.now()
   }
+
+  uniforms = {
+    texture1: { type: 't', value: THREE.ImageUtils.loadTexture('/static/threejs/UVface2.png') },
+    time: { // float initialized to 0
+      type: 'f',
+      value: 0.0,
+    },
+  }
+
+  material = new THREE.ShaderMaterial({
+    uniforms: this.uniforms,
+    vertexShader: vertShader,
+    fragmentShader: fragShader,
+  })
 
   onResize = (renderer, gl, { width, height }) => {
     // This function is called after canvas has been resized.
@@ -45,35 +60,18 @@ class Scene extends React.Component {
     // This function is called once, after canvas component has been mounted.
     // And WebGLRenderer and WebGLRenderingContext have been created.
 
+
     this.scene = new THREE.Scene()
 
-    this.cube = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), this.material)
-    this.cube.position.x = 0
-    this.cube.position.y = 0
-    this.cube.position.z = 0
 
 
-    var uniforms = {
-      texture1: { type: 't', value: THREE.ImageUtils.loadTexture('/static/threejs/UVface2.png') },
-      time: { // float initialized to 0
-        type: 'f',
-        value: 0.0,
-      },
-    }
-
-    this.material = new THREE.ShaderMaterial({
-      uniforms: uniforms,
-      vertexShader: vertShader,
-      fragmentShader: fragShader,
-    })
-    let self = this
-    var loader = new THREE.JSONLoader()
+    let loader = new THREE.JSONLoader()
     loader.load( '/static/threejs/me4.json', function ( geometry, materials ) {
-      var json = new THREE.Mesh( geometry, material)
+      let json = new THREE.Mesh( geometry, this.material)
       json.position.set( 0,0,0)
       json.scale.set( 1, 1, 1 )
-      self.scene.add( json )
-    } )
+      this.scene.add( json )
+    }.bind(this) )
 
     const ambientLight = new THREE.AmbientLight('#ffffff', 0.5)
     this.scene.add(ambientLight)
@@ -92,7 +90,8 @@ class Scene extends React.Component {
     // This function is called when browser is ready to repaint the canvas.
     // Draw your single frame here.
 
-    this.cube.rotation.y += 0.01 * this.state.rotationDirection
+
+    this.material.uniforms[ 'time' ].value = .00025 * ( Date.now() - this.start );
     renderer.render(this.scene, this.camera)
   }
 
@@ -109,21 +108,9 @@ class Scene extends React.Component {
         <div className='row'>
 
           {/* Column with Sidebar */}
-          <div className='col-3'>
-            <Form>
-              <Button id='btn-dir' onClick={this.handleDirectionButtonClick}>
-                {/* Toggle icon depending on current direction */}
-                <FontAwesomeIcon icon={
-                  this.state.rotationDirection > 0
-                    ? faForward
-                    : faBackward
-                }/>
-              </Button>
-            </Form>
-          </div>
 
           {/* Column with Renderer */}
-          <div className='col-9'>
+          <div className='col-12'>
             <div className="row">
               <Renderer
                 onResize={this.onResize}
