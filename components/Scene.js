@@ -8,8 +8,11 @@ import { Button, Form, InputGroup, Label } from 'reactstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import faForward from '@fortawesome/fontawesome-free-solid/faForward'
 import faBackward from '@fortawesome/fontawesome-free-solid/faBackward'
+
 import {vertShader} from './threejs/vertShader.js'
 import {fragShader} from './threejs/fragShader.js'
+
+import Projects from './Projects.js'
 
 /**
  * Implements a 3D scene
@@ -27,8 +30,6 @@ import {fragShader} from './threejs/fragShader.js'
 class Scene extends React.Component {
   constructor(props, context) {
     super(props, context)
-
-    // Some local state for this component
     this.state = {
       rotationDirection: +1, // shows which direction cube spins
     }
@@ -57,18 +58,12 @@ class Scene extends React.Component {
   }
 
   initScene = (renderer, gl) => {
-    // This function is called once, after canvas component has been mounted.
-    // And WebGLRenderer and WebGLRenderingContext have been created.
-
-
     this.scene = new THREE.Scene()
-
-
 
     let loader = new THREE.JSONLoader()
     loader.load( '/static/threejs/me4.json', function ( geometry, materials ) {
       let json = new THREE.Mesh( geometry, this.material)
-      json.position.set( 0,0,0)
+      json.position.set( 0,0,-1)
       json.scale.set( 1, 1, 1 )
       this.scene.add( json )
     }.bind(this) )
@@ -79,6 +74,7 @@ class Scene extends React.Component {
     const pointLight = new THREE.PointLight('#ffffff', 1.0)
     pointLight.position.set(5, 10, 5)
     this.scene.add(pointLight)
+    this.scene.background =  new THREE.Color( 0xf0f0f0 )
 
     this.camera = new THREE.PerspectiveCamera(75, 16 / 9, 0.1, 1000)
     this.camera.position.z = 4
@@ -87,9 +83,6 @@ class Scene extends React.Component {
   }
 
   renderScene = (renderer, gl) => {
-    // This function is called when browser is ready to repaint the canvas.
-    // Draw your single frame here.
-
 
     this.material.uniforms[ 'time' ].value = .00025 * ( Date.now() - this.start );
     renderer.render(this.scene, this.camera)
@@ -106,12 +99,8 @@ class Scene extends React.Component {
     return (
       <div className='container-fluid'>
         <div className='row'>
-
-          {/* Column with Sidebar */}
-
-          {/* Column with Renderer */}
           <div className='col-12'>
-            <div className="row">
+            <div className="row" >
               <Renderer
                 onResize={this.onResize}
                 initScene={this.initScene}
@@ -120,12 +109,22 @@ class Scene extends React.Component {
             </div>
           </div>
         </div>
-
-        {/*language=CSS*/}
+        <div className='overlaps'>
+          <Projects/>
+        </div>
         <style jsx>{`
           .container-fluid {
             width: 100vw;
             height: 100vh;
+          }
+
+          .overlaps {
+            position:absolute;
+            margin: 10px;
+            left: 0px;
+            top: 0px;
+            z-index: 1;
+            font-size: 18px;
           }
 
           .row {
