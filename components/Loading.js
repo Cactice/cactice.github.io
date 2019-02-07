@@ -2,7 +2,7 @@ import React from 'react'
 
 const Loading = () => (
   <div>
-    <h3>Loading...</h3>
+    <h3>Loading Love...</h3>
 
     {/*language=CSS*/}
     <style jsx>{`
@@ -12,7 +12,7 @@ const Loading = () => (
         height: 100vh;
         align-items: center;
         justify-content: center;
-        color: #aaa;
+        color: #fff;
         background-color: #222;
       }
     `}</style>

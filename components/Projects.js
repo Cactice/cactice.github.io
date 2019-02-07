@@ -2,7 +2,7 @@
 import {Component} from 'react'
 import Cards from './Cards'
 
-import {Row, Col} from 'react-bootstrap'
+import {Row, Col, Container} from 'react-bootstrap'
 
 var data = [
   {
@@ -35,22 +35,27 @@ export default class Projects extends Component {
   render() {
     return (
       <div>
+
         <center>
+        <Container>
           <Row>
             {
-              data.map(d => {
+              data.map((d,key) => {
                 return (
-                  <Col style={{margin:10}}>
+                  <Col style={{marginTop:6,marginBottom:6}}>
                     <Cards
                      title = {d.title}
                      content = {d.content}
+                     key = {key} 
                     />
                   </Col>
                 )
               })
             }
           </Row>
+        </Container>
         </center>
+
       </div>
     )
   }

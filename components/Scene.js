@@ -12,7 +12,6 @@ import faBackward from '@fortawesome/fontawesome-free-solid/faBackward'
 import {vertShader} from './threejs/vertShader.js'
 import {fragShader} from './threejs/fragShader.js'
 
-import Projects from './Projects.js'
 
 /**
  * Implements a 3D scene
@@ -63,7 +62,7 @@ class Scene extends React.Component {
     let loader = new THREE.JSONLoader()
     loader.load( '/static/threejs/me4.json', function ( geometry, materials ) {
       let json = new THREE.Mesh( geometry, this.material)
-      json.position.set( 0,0,-1)
+      json.position.set( 0,1,-1)
       json.scale.set( 1, 1, 1 )
       this.scene.add( json )
     }.bind(this) )
@@ -109,22 +108,10 @@ class Scene extends React.Component {
             </div>
           </div>
         </div>
-        <div className='overlaps'>
-          <Projects/>
-        </div>
         <style jsx>{`
           .container-fluid {
             width: 100vw;
             height: 100vh;
-          }
-
-          .overlaps {
-            position:absolute;
-            margin: 10px;
-            left: 0px;
-            top: 0px;
-            z-index: 1;
-            font-size: 18px;
           }
 
           .row {
