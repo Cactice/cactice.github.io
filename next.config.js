@@ -1,5 +1,7 @@
 const withSass = require('@zeit/next-sass')
 const withProgressBar = require('next-progressbar')
+const withBundleAnalyzer = require("@zeit/next-bundle-analyzer");
+const Visualizer = require('webpack-visualizer-plugin');
 
 let config = {
   onDemandEntries: {
@@ -20,9 +22,27 @@ let config = {
   webpackDevMiddleware: config => {
     return config
   },
+  plugins: [new Visualizer({
+    filename: './statistics.html'
+  })],
+  analyzeServer: ['server', 'both'].includes(process.env.BUNDLE_ANALYZE),
+  analyzeBrowser: ['browser', 'both'].includes(process.env.BUNDLE_ANALYZE),
+  bundleAnalyzerConfig: {
+    server: {
+      analyzerMode: 'static',
+      reportFilename: '../bundles/server.html',
+    },
+    browser: {
+      analyzerMode: 'static',
+      reportFilename: '../bundles/client.html',
+    },
+  },
 }
+
 
 config = withSass(config)
 config = withProgressBar(config)
+config = withBundleAnalyzer(config)
 
 module.exports = config
+

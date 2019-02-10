@@ -10,11 +10,13 @@ ${hOffset}px ${vOffset}px ${blur}px ${spread}px rgba(${r}, ${g}, ${b}, ${a})\
 `
  
 export default function SpringCards() {
-  const [size, setSize] = useState({x:0,y:0})
-  const [props, setXYS] = useSpring(() => ({ xys: [0, 0, 1], config: { mass: 5, tension: 350, friction: 40 } }))
-  const onMouseShadowVals = [0, 5, 30, 5, 0, 0, 0, 0.1]
-  const offMouseShadowVals = [0, 30, 100, -10, 0, 0, 0, 0.4]
+  const offMouseShadowVals = [0, 30, 50, -10, 0, 0, 0, 0.3]
+  const onMouseShadowVals  = [0, 5, 30, 5, 0, 0, 0, 0.1]
 
+  const offMouseCardAngle = [0, 0, 1]
+
+  const [size, setSize] = useState({x:0,y:0})
+  const [cardAngle, setXYS] = useSpring(() => ({ xys: offMouseCardAngle, config: { mass: 5, tension: 350, friction: 40 } }))
   const [shadow, setShadow] = useSpring(() => ({ vals:onMouseShadowVals , config: { mass: 5, tension: 350, friction: 40 } }))
   
   let node = {}
@@ -31,15 +33,15 @@ export default function SpringCards() {
       <animated.div
         className="card"
         onMouseMove={({ clientX: x, clientY: y }) => {
-          setXYS({ xys: calc(x, y, size) })
+          setXYS({ xys: calc(x, y, size)})
           setShadow({ vals:onMouseShadowVals })
         }}
         onMouseLeave={() => {
-          setXYS({ xys: [0, 0, 1] })
+          setXYS({ xys: offMouseCardAngle })
           setShadow({ vals:offMouseShadowVals })
         }}
         style={{ 
-          transform: props.xys.interpolate(transXYS) ,
+          transform: cardAngle.xys.interpolate(transXYS) ,
           boxShadow: shadow.vals.interpolate(transShadow)
         }}
       >
@@ -61,7 +63,6 @@ export default function SpringCards() {
         background: grey;
         border-radius: 5px;
         background: url(https://drscdn.500px.org/photo/435236/q%3D80_m%3D1500/v2?webp=true&sig=67031bdff6f582f3e027311e2074be452203ab637c0bd21d89128844becf8e40);
-        box-shadow: 0px 10px 30px 5px rgba(0, 0, 0, 0.3);
         background-size: cover;
         background-position: center center;
         transition: box-shadow 0.5s;
@@ -69,9 +70,6 @@ export default function SpringCards() {
         border: 35px solid white;
       }
 
-      .card:hover {
-        box-shadow: 0px 30px 100px -10px rgba(0, 0, 0, 0.4);
-      }
     `}</style>
     </div>
   )

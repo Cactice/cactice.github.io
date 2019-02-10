@@ -6,10 +6,10 @@ export default class Projects extends Component {
 
   render() {
     return (
-      <div ref={'card'+this.props.key}>
+      <div ref={'card'+this.props.key}  style={{ width: '15rem' }}>
         <SpringCards/> 
-        <Card style={{ width: '15rem' }}>
-          {/*<Card.Img variant="top" src="" />*/}
+      {/*<Card style={{ width: '15rem' }}>
+          {/*<Card.Img variant="top" src="" />
           <Card.Body>
             <Card.Title> {this.props.title}</Card.Title>
               <Card.Text style={{backgroundColor: 'orange'}}>
@@ -18,7 +18,7 @@ export default class Projects extends Component {
             <Button variant="primary">Visit</Button>
       
           </Card.Body>
-        </Card>
+        </Card> */}
       </div>
     )
   }

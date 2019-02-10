@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import * as THREE from 'three'
+import  {WebGLRenderer} from 'three'
 import ReactResizeDetector from 'react-resize-detector'
 
 
@@ -35,7 +35,7 @@ class Renderer extends React.Component {
     this.canvas = document.getElementById('canvas')
 
     // Create Three.js renderer
-    this.renderer = new THREE.WebGLRenderer({
+    this.renderer = new WebGLRenderer({
       canvas: this.canvas,
       antialias: true,
     })
