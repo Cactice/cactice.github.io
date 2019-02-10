@@ -4,15 +4,23 @@ import { useSpring, animated } from 'react-spring'
 
 import {Button} from 'react-bootstrap'
 const calc = (x, y, size) => [-(y - size.y-(size.height/2)) / 10,(x-size.x-(size.width/2))/10, 1.1]
-const trans = (x, y, s) => `perspective(600px) rotateX(${x}deg) rotateY(${y}deg) scale(${s})`
-
+const transXYS = (x, y, s) => `perspective(600px) rotateX(${x}deg) rotateY(${y}deg) scale(${s})`
+const transShadow = (hOffset, vOffset, blur, spread, r, g, b, a) => `\
+${hOffset}px ${vOffset}px ${blur}px ${spread}px rgba(${r}, ${g}, ${b}, ${a})\
+`
+ 
 export default function SpringCards() {
   const [size, setSize] = useState({x:0,y:0})
-  const [props, set] = useSpring(() => ({ xys: [0, 0, 1], config: { mass: 5, tension: 350, friction: 40 } }))
+  const [props, setXYS] = useSpring(() => ({ xys: [0, 0, 1], config: { mass: 5, tension: 350, friction: 40 } }))
+  const onMouseShadowVals = [0, 5, 30, 5, 0, 0, 0, 0.1]
+  const offMouseShadowVals = [0, 30, 100, -10, 0, 0, 0, 0.4]
+
+  const [shadow, setShadow] = useSpring(() => ({ vals:onMouseShadowVals , config: { mass: 5, tension: 350, friction: 40 } }))
+  
   let node = {}
   let refCallback = element => {
     if (element) {
-      node=element//
+      node=element
     }
   }
   useEffect(() => {
@@ -20,12 +28,21 @@ export default function SpringCards() {
   })
   return (
     <div ref={refCallback} >
-    <animated.div
-      className="card"
-      onMouseMove={({ clientX: x, clientY: y }) => set({ xys: calc(x, y, size) })}
-      onMouseLeave={() => set({ xys: [0, 0, 1] })}
-      style={{ transform: props.xys.interpolate(trans) , boxShadow:`0px 5px 30px 5px rgba(0, 0, 0, 0.1)`}}
-    >
+      <animated.div
+        className="card"
+        onMouseMove={({ clientX: x, clientY: y }) => {
+          setXYS({ xys: calc(x, y, size) })
+          setShadow({ vals:onMouseShadowVals })
+        }}
+        onMouseLeave={() => {
+          setXYS({ xys: [0, 0, 1] })
+          setShadow({ vals:offMouseShadowVals })
+        }}
+        style={{ 
+          transform: props.xys.interpolate(transXYS) ,
+          boxShadow: shadow.vals.interpolate(transShadow)
+        }}
+      >
     <p style={{height:200}}>hai</p>
     </animated.div>
     <style jsx>{`
