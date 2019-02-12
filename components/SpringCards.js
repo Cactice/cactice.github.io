@@ -1,24 +1,36 @@
 import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import { useSpring, animated } from 'react-spring'
-
 import {Button} from 'react-bootstrap'
-const calc = (x, y, size) => [-(y - size.y-(size.height/2)) / 10,(x-size.x-(size.width/2))/10, 1.1]
+
+const calc = (x, y, size) => [
+  -(y - size.y-(size.height/2)) / 10, 
+  (x-size.x-(size.width/2)) / 10,
+  1.1
+]
+
+const calcOnClick = (x, y, size) => [
+  0, 
+  180,
+  2
+]
+
 const transXYS = (x, y, s) => `perspective(600px) rotateX(${x}deg) rotateY(${y}deg) scale(${s})`
+const transXYSBack = (x, y, s) => `perspective(600px) rotateX(${x}deg) rotateY(${y+180}deg) scale(${s})`
 const transShadow = (hOffset, vOffset, blur, spread, r, g, b, a) => `\
 ${hOffset}px ${vOffset}px ${blur}px ${spread}px rgba(${r}, ${g}, ${b}, ${a})\
 `
  
 export default function SpringCards() {
-  const offMouseShadowVals = [0, 30, 50, -10, 0, 0, 0, 0.3]
-  const onMouseShadowVals  = [0, 5, 30, 5, 0, 0, 0, 0.1]
+  const offMouseShadowVals = [0, 30, 50, -10, 0, 0, 0, 0.1]
+  const onMouseShadowVals  = [0, 5, 30, 5, 0, 0, 0, 0.05]
 
   const offMouseCardAngle = [0, 0, 1]
 
-  const [size, setSize] = useState({x:0,y:0})
+  const [size, setSize] = useState({x:0, y:0})
   const [cardAngle, setXYS] = useSpring(() => ({ xys: offMouseCardAngle, config: { mass: 5, tension: 350, friction: 40 } }))
-  const [shadow, setShadow] = useSpring(() => ({ vals:onMouseShadowVals , config: { mass: 5, tension: 350, friction: 40 } }))
-  
+  const [shadow, setShadow] = useSpring(() => ({ vals:offMouseShadowVals , config: { mass: 5, tension: 350, friction: 40 } }))
+  const [flipped, setFlipped] = useState(false)
   let node = {}
   let refCallback = element => {
     if (element) {
@@ -29,25 +41,73 @@ export default function SpringCards() {
     setSize(node.getBoundingClientRect())
   })
   return (
-    <div ref={refCallback} >
+    <div 
+    ref={refCallback} 
+    >
       <animated.div
-        className="card"
+        style= {{
+          height:'200px',
+          cursor: 'pointer'
+        }}
         onMouseMove={({ clientX: x, clientY: y }) => {
-          setXYS({ xys: calc(x, y, size)})
-          setShadow({ vals:onMouseShadowVals })
+          if(flipped == false){
+            setXYS({ xys: calc(x, y, size)})
+            setShadow({ vals:onMouseShadowVals })
+          }
         }}
         onMouseLeave={() => {
-          setXYS({ xys: offMouseCardAngle })
-          setShadow({ vals:offMouseShadowVals })
+            setFlipped(false)
+            setXYS({ xys: offMouseCardAngle })
+            setShadow({ vals:offMouseShadowVals })
         }}
-        style={{ 
-          transform: cardAngle.xys.interpolate(transXYS) ,
-          boxShadow: shadow.vals.interpolate(transShadow)
+        onClick = {({ clientX: x, clientY: y })=> {
+          if(flipped == false){
+            setFlipped(true)
+            setXYS({ xys: calcOnClick(x,y,size) })
+            setShadow({ vals:offMouseShadowVals })
+          }else{
+            setFlipped(false)
+            setXYS({ xys: calc(x, y, size)})
+            setShadow({ vals:onMouseShadowVals })
+          }
         }}
       >
-    <p style={{height:200}}>hai</p>
-    </animated.div>
-    <style jsx>{`
+        <animated.div
+          className="card"
+          style={{ 
+            transform: cardAngle.xys.interpolate(transXYS) ,
+            boxShadow: shadow.vals.interpolate(transShadow),
+            position: 'absolute',
+            height: 200,
+            width: '15rem',
+            borderRadius: '20px',
+            backfaceVisibility: 'hidden',
+            zIndex:2
+          }}
+        >
+          <p>Hello</p>
+          <p>{flipped.toString()}</p>
+          <Button>
+          Hi
+          </Button>
+        </animated.div>
+        <animated.div
+          className="card"
+          style={{ 
+            transform: cardAngle.xys.interpolate(transXYSBack) ,
+            boxShadow: shadow.vals.interpolate(transShadow),
+            position: 'absolute',
+            height: 200,
+            width: '15rem',
+            borderRadius: '20px',
+            backfaceVisibility: 'hidden',
+            zIndex:10,
+          }}
+        >
+          <p>{flipped.toString()}</p>
+        </animated.div>
+      </animated.div>
+      <style jsx>{`
 
       root {
         display: flex;
@@ -58,16 +118,7 @@ export default function SpringCards() {
       }
 
       .card {
-        width: 15rem;
-        height: 450ch;
-        background: grey;
-        border-radius: 5px;
-        background: url(https://drscdn.500px.org/photo/435236/q%3D80_m%3D1500/v2?webp=true&sig=67031bdff6f582f3e027311e2074be452203ab637c0bd21d89128844becf8e40);
-        background-size: cover;
-        background-position: center center;
-        transition: box-shadow 0.5s;
-        will-change: transform;
-        border: 35px solid white;
+        height: 200px;
       }
 
     `}</style>
