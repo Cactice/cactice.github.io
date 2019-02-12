@@ -10,6 +10,10 @@ let config = {
   },
 
   webpack: (config, { dev }) => {
+      config.module.rules.push({
+        test: /\.glsl$/,
+        use: ["raw-loader"]
+      })
     if(dev) {
       config.devtool = 'cheap-module-source-map'
       config.output.crossOriginLoading = 'anonymous'
@@ -20,6 +24,13 @@ let config = {
   },
 
   webpackDevMiddleware: config => {
+    config.watchOptions = {
+      ignored: [
+        /\.git\//,
+        /\.next\//,
+        /node_modules/
+      ]
+    }
     return config
   },
   plugins: [new Visualizer({
