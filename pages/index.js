@@ -7,10 +7,38 @@ import Loading from '../components/Loading'
 import '../styles/main.scss'
 import Projects from '../components/Projects'
 import { ParallaxProvider, Parallax} from 'react-scroll-parallax';
+import CacticeWorks from './cacticeWorks.json'
+import Lottie from 'react-lottie';
+import  { useState , useEffect} from 'react';
+
 /**
  * Implements main page
  */
 const Index = () => {
+
+    const [progress, setProgress] = useState(0)
+    const [isAbove, setIsAbove] = useState(true)
+    let lottieRef = React.createRef()
+    const defaultOptions = {
+      loop: false,
+      autoplay: false, 
+      animType: 'svg',
+      animationData: CacticeWorks,
+      rendererSettings: {},
+    }
+
+
+  useEffect(() => {
+    const handleScroll = () => { 
+      let scrollPosition = window.scrollY;
+      let duration = window.innerHeight 
+      let frame = (scrollPosition / duration );
+      if(frame>0.9){setIsAbove(false)}
+      console.log(frame)
+    }
+    window.addEventListener('scroll', handleScroll);
+
+  }, [])
 
   // Wrap WebGL-related components with NoSSR to disable server-side rendering
   return (
@@ -27,7 +55,7 @@ const Index = () => {
             offsetYMin={-30}
             tag="figure"
             styleInner={{
-              paddingTop:'10vh',
+              paddingTep:'10vh',
               paddingLeft:'15vw'
             }}
           >
@@ -47,13 +75,13 @@ const Index = () => {
             </div>
           </Parallax>
         </div>
-          <Parallax
-            className="custom-class"
-            offsetYMax={30}
-            offsetYMin={-30}
-            tag="figure"
-          >
-          </Parallax>
+            <Lottie 
+              ref={lottieRef}
+              options={defaultOptions}
+              height={400}
+              width={400}
+              isPaused={isAbove}
+            />
         <div className='project_view'>
           <Projects/>
         </div>
