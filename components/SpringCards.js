@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import { useSpring, animated } from 'react-spring'
-import {Button} from 'react-bootstrap'
 
 const calc = (x, y, size) => [
   -(y - size.y-(size.height/2)) / 10, 
@@ -9,11 +8,10 @@ const calc = (x, y, size) => [
   1.1
 ]
 
-const calcOnClick = (x, y, size) => [
-  0, 
-  180,
-  2
-]
+const calcOnClick = (x, y, size) => [0, 180, 2]
+  
+  
+
 
 const transXYS = (x, y, s) => `perspective(600px) rotateX(${x}deg) rotateY(${y}deg) scale(${s})`
 const transXYSBack = (x, y, s) => `perspective(600px) rotateX(${x}deg) rotateY(${y+180}deg) scale(${s})`
@@ -21,7 +19,7 @@ const transShadow = (hOffset, vOffset, blur, spread, r, g, b, a) => `\
 ${hOffset}px ${vOffset}px ${blur}px ${spread}px rgba(${r}, ${g}, ${b}, ${a})\
 `
  
-export default function SpringCards() {
+export default function SpringCards({title,content,key,imageUrl}) {
   const offMouseShadowVals = [0, 30, 50, -10, 0, 0, 0, 0.1]
   const onMouseShadowVals  = [0, 5, 30, 5, 0, 0, 0, 0.05]
 
@@ -31,22 +29,25 @@ export default function SpringCards() {
   const [cardAngle, setXYS] = useSpring(() => ({ xys: offMouseCardAngle, config: { mass: 5, tension: 350, friction: 40 } }))
   const [shadow, setShadow] = useSpring(() => ({ vals:offMouseShadowVals , config: { mass: 5, tension: 350, friction: 40 } }))
   const [flipped, setFlipped] = useState(false)
+
   let node = {}
   let refCallback = element => {
     if (element) {
       node=element
     }
   }
+
   useEffect(() => {
     setSize(node.getBoundingClientRect())
   })
   return (
     <div 
     ref={refCallback} 
+    style={{ width: '18rem' }}
     >
       <animated.div
         style= {{
-          height:'200px',
+          height:'250px',
           cursor: 'pointer'
         }}
         onMouseMove={({ clientX: x, clientY: y }) => {
@@ -78,18 +79,39 @@ export default function SpringCards() {
             transform: cardAngle.xys.interpolate(transXYS) ,
             boxShadow: shadow.vals.interpolate(transShadow),
             position: 'absolute',
-            height: 200,
-            width: '15rem',
+            height: 240,
+            width: '17rem',
             borderRadius: '20px',
+            zIndex:2,
             backfaceVisibility: 'hidden',
-            zIndex:2
           }}
         >
-          <p>Hello</p>
-          <p>{flipped.toString()}</p>
-          <Button>
-          Hi
-          </Button>
+
+          <div
+            style={{ 
+              position:'absolute',
+              top:0,left:0,right:0,bottom:0,
+              backgroundImage: `url(/static/${imageUrl})`,
+              backgroundPosition: 'center center',
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'contain',
+              borderRadius: '20px',
+              zIndex:10
+            }}
+            />
+          <div
+            style={{ 
+              position:'absolute',
+              borderRadius: '20px',
+              top:0,left:0,right:0,bottom:0,
+              backgroundImage: `url(/static/${imageUrl})`,
+              backgroundPosition: 'center center',
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'cover',
+              filter: 'blur(1px)',
+              zIndex:1,
+            }}
+            />
         </animated.div>
         <animated.div
           className="card"
@@ -97,14 +119,15 @@ export default function SpringCards() {
             transform: cardAngle.xys.interpolate(transXYSBack) ,
             boxShadow: shadow.vals.interpolate(transShadow),
             position: 'absolute',
-            height: 200,
-            width: '15rem',
+            height: 250,
+            width: '18rem',
             borderRadius: '20px',
             backfaceVisibility: 'hidden',
             zIndex:10,
           }}
         >
-          <p>{flipped.toString()}</p>
+          <p>{title}</p>
+          <p>{content}</p>
         </animated.div>
       </animated.div>
       <style jsx>{`
@@ -119,6 +142,7 @@ export default function SpringCards() {
 
       .card {
         height: 200px;
+
       }
 
     `}</style>

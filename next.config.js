@@ -10,10 +10,11 @@ let config = {
   },
 
   webpack: (config, { dev }) => {
-      config.module.rules.push({
-        test: /\.glsl$/,
-        use: ["raw-loader"]
-      })
+    config.module.rules.push({
+      test: /\.glsl$/,
+      use: ["raw-loader"]
+    })
+
     if(dev) {
       config.devtool = 'cheap-module-source-map'
       config.output.crossOriginLoading = 'anonymous'
