@@ -4,7 +4,7 @@ import NoSSR from 'react-no-ssr'
 import Scene from '../components/Scene'
 import Loading from '../components/Loading'
 
-import '../styles/main.scss'
+import 'bootstrap/scss/bootstrap.scss'
 import Projects from '../components/Projects'
 import { ParallaxProvider, Parallax} from 'react-scroll-parallax';
 import CacticeWorks from './cacticeWorks.json'
