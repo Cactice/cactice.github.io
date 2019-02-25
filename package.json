@@ -9,7 +9,7 @@
     "build": "next build",
     "start": "next start",
     "anal": "BUNDLE_ANALYZE=browser npm run build",
-    "export": "next export",
+    "export": "next export && cp CNAME out",
     "deploy": "next build && next export && ./scripts/deploy"
   },
   "engines": {
