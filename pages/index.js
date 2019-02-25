@@ -34,10 +34,8 @@ const Index = () => {
       let duration = window.innerHeight 
       let frame = (scrollPosition / duration );
       if(frame>0.9){setIsAbove(false)}
-      console.log(frame)
     }
     window.addEventListener('scroll', handleScroll);
-
   }, [])
 
   // Wrap WebGL-related components with NoSSR to disable server-side rendering
@@ -75,13 +73,15 @@ const Index = () => {
             </div>
           </Parallax>
         </div>
-            <Lottie 
-              ref={lottieRef}
-              options={defaultOptions}
-              height={400}
-              width={400}
-              isPaused={isAbove}
-            />
+        <div style={{marginRight:-50}}>
+        <Lottie 
+          ref={lottieRef}
+          options={defaultOptions}
+          height={200}
+          width={400}
+          isPaused={isAbove}
+        />
+        </div>
         <div className='project_view'>
           <Projects/>
         </div>

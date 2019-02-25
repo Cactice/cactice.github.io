@@ -8,7 +8,7 @@ const calc = (x, y, size) => [
   1.1
 ]
 
-const calcOnClick = (x, y, size) => [0, 180, 2]
+const calcOnClick = (x, y, size) => [0, 180, 1.6]
   
   
 
@@ -29,6 +29,7 @@ export default function SpringCards({title,content,key,imageUrl}) {
   const [cardAngle, setXYS] = useSpring(() => ({ xys: offMouseCardAngle, config: { mass: 5, tension: 350, friction: 40 } }))
   const [shadow, setShadow] = useSpring(() => ({ vals:offMouseShadowVals , config: { mass: 5, tension: 350, friction: 40 } }))
   const [flipped, setFlipped] = useState(false)
+  const [flippedCardWidth, setFlippedCardWidth] = useState(260)
 
   let node = {}
   let refCallback = element => {
@@ -38,8 +39,14 @@ export default function SpringCards({title,content,key,imageUrl}) {
   }
 
   useEffect(() => {
+    let width = window.innerWidth 
+    let flippedCardWidth = width < 600 ? width/2 : 260
+    setFlippedCardWidth(flippedCardWidth)
+  })
+  useEffect(() => {
     setSize(node.getBoundingClientRect())
   })
+
   return (
     <div 
     ref={refCallback} 
@@ -48,7 +55,6 @@ export default function SpringCards({title,content,key,imageUrl}) {
       <animated.div
         style= {{
           height:'250px',
-          cursor: 'pointer'
         }}
         onMouseMove={({ clientX: x, clientY: y }) => {
           if(flipped == false){
@@ -76,6 +82,7 @@ export default function SpringCards({title,content,key,imageUrl}) {
         <animated.div
           className="card"
           style={{ 
+            cursor: 'pointer',
             transform: cardAngle.xys.interpolate(transXYS) ,
             boxShadow: shadow.vals.interpolate(transShadow),
             position: 'absolute',
@@ -86,7 +93,6 @@ export default function SpringCards({title,content,key,imageUrl}) {
             backfaceVisibility: 'hidden',
           }}
         >
-
           <div
             style={{ 
               position:'absolute',
@@ -98,7 +104,7 @@ export default function SpringCards({title,content,key,imageUrl}) {
               borderRadius: '20px',
               zIndex:10
             }}
-            />
+          />
           <div
             style={{ 
               position:'absolute',
@@ -111,25 +117,35 @@ export default function SpringCards({title,content,key,imageUrl}) {
               filter: 'blur(1px)',
               zIndex:1,
             }}
-            />
+          />
         </animated.div>
         <animated.div
           className="card"
           style={{ 
             transform: cardAngle.xys.interpolate(transXYSBack) ,
             boxShadow: shadow.vals.interpolate(transShadow),
+              top:0,left:0,right:0,bottom:0,
+            margin:'auto',
             position: 'absolute',
             height: 250,
-            width: '18rem',
+            width: flippedCardWidth,
             borderRadius: '20px',
             backfaceVisibility: 'hidden',
             zIndex:10,
           }}
         >
-          <p>{title}</p>
-          <p>{content}</p>
+
+          <div style={{margin:10}}>
+          <strong>{title}</strong>
+          <hr/>
+          <div>
+            <p>{content}</p>
+          </div>
+          </div>
         </animated.div>
+
       </animated.div>
+
       <style jsx>{`
 
       root {

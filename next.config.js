@@ -49,6 +49,11 @@ let config = {
       reportFilename: '../bundles/client.html',
     },
   },
+  exportPathMap: function () {
+    return {
+      '/': { page: '/' }
+    }
+  }
 }
 
 
