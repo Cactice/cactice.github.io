@@ -44,7 +44,7 @@ const Index = () => {
     <div>
       <Head>
         <title>Cactice</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
         <meta name="Description" content="Cactice is one of the biggest fans of coding. Coding is his love."/>
         <html lang="en" />
       </Head>
