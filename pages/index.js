@@ -41,7 +41,12 @@ const Index = () => {
   // Wrap WebGL-related components with NoSSR to disable server-side rendering
   return (
     <div>
-      <body style={{overflowX: 'hidden'}}>
+      <head>
+        <title>Cactice</title>
+        <meta name="Description" content="Cactice is one of the biggest fans of coding. Coding is his love."/>
+        <html lang="en" />
+      </head>
+      <body style={{overflowX: 'hidden', position:'relative'}}>
       <ParallaxProvider>
         <NoSSR onSSR={<Loading/>}>
           <Scene/>
