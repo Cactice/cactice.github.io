@@ -8,30 +8,30 @@ var data = [
   {
     title: 'Lensign', 
     content: 'IOS app that allows users to code with a touch interface as well as function as a full-fledged video editor',
-    imageUrl: 'lensign.png'
+    imageUrl: 'lensign.jpg'
   },
   {
     title: 'Lunchmate', 
     content: 'An app for finding people to eat lunch with',
-    imageUrl: 'lunchmate.png'
+    imageUrl: 'lunchmate.jpg'
   },
   {
-    title: 'Md-split', 
+    title: 'MD Split', 
     content: 'Split md files to small chunks so it is appropriate to post on websites like scrapbox',
-    imageUrl: 'md-split.png'
+    imageUrl: 'md-split.jpg'
   },
   {
     title: 'Three60', 
     content: 'Use three IOS devices to record a 360 video',
-    imageUrl: 'three60.png'
+    imageUrl: 'three60.jpg'
   },
   {
     title: 'Trakr', 
     content: 'An app that finds lost people using machine learning',
-    imageUrl: 'trakr.png'
+    imageUrl: 'trakr.jpg'
   },
   {
-    title: 'CokeSalesPredictor', 
+    title: 'Coke Sales Predictor', 
     content: 'Predict the sales of coca-cola\'s drink\'s sales based on machine learning',
     imageUrl: 'cokeSalesPredictor.gif'
   },
