@@ -43,7 +43,7 @@ export default class Scene2 extends React.Component {
     this.scene = new Scene()
 
     var loader = new TextureLoader()
-    loader.load('/static/threejs/UVface2.webp', (tex)=> {
+    loader.load('/static/threejs/UVface2.jpg', (tex)=> {
       this.uniforms = {
         texture1: { type: 't', value: tex},
         time    : { // float initialized to 0

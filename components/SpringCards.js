@@ -91,6 +91,7 @@ export default function SpringCards({title,content,key,imageUrl}) {
             borderRadius: '20px',
             zIndex:2,
             backfaceVisibility: 'hidden',
+            webkitBackfaceVisibility: 'hidden',
           }}
         >
           <div
@@ -131,6 +132,7 @@ export default function SpringCards({title,content,key,imageUrl}) {
             width: flippedCardWidth,
             borderRadius: '20px',
             backfaceVisibility: 'hidden',
+            webkitBackfaceVisibility: 'hidden',
             zIndex:10,
           }}
         >

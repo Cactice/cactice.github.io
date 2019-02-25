@@ -33,7 +33,7 @@ var data = [
   {
     title: 'Coke Sales Predictor', 
     content: 'Predict the sales of coca-cola\'s drink\'s sales based on machine learning',
-    imageUrl: 'cokeSalesPredictor.gif'
+    imageUrl: 'cokeSalesPredictor.jpg'
   },
 ]
 
