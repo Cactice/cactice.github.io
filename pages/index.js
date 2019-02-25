@@ -4,6 +4,7 @@ import NoSSR from 'react-no-ssr'
 import Scene from '../components/Scene'
 import Loading from '../components/Loading'
 
+import Head from 'next/head'
 import 'bootstrap/scss/bootstrap.scss'
 import Projects from '../components/Projects'
 import { ParallaxProvider, Parallax} from 'react-scroll-parallax';
@@ -41,11 +42,12 @@ const Index = () => {
   // Wrap WebGL-related components with NoSSR to disable server-side rendering
   return (
     <div>
-      <head>
+      <Head>
         <title>Cactice</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="Description" content="Cactice is one of the biggest fans of coding. Coding is his love."/>
         <html lang="en" />
-      </head>
+      </Head>
       <body style={{overflowX: 'hidden', position:'relative'}}>
       <ParallaxProvider>
         <NoSSR onSSR={<Loading/>}>
