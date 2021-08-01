@@ -60,7 +60,6 @@
     "lodash": "^4.17.10",
     "next": "^7.0.3",
     "next-progressbar": "^1.0.0",
-    "node-sass": "^4.9.0",
     "npm-check-updates": "^2.14.2",
     "prop-types": "^15.6.1",
     "rc-drawer": "^0.4.11",
