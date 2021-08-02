@@ -9,8 +9,8 @@
     "build": "next build",
     "start": "next start",
     "anal": "BUNDLE_ANALYZE=browser npm run build",
-    "export": "next export && cp CNAME out",
-    "deploy": "next build && next export && ./scripts/deploy"
+    "export": "next export && cp CNAME out && cp .nojekyll out",
+    "deploy": "next build && npm run export && gh-pages -d out --dotfiles"
   },
   "engines": {
     "node": ">=8",
@@ -31,6 +31,8 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "@mdx-js/loader": "^1.6.22",
+    "@next/mdx": "^11.0.1",
     "@zeit/next-bundle-analyzer": "^0.1.2",
     "ajv": "^6.9.1",
     "json-loader": "^0.5.7",
@@ -58,6 +60,7 @@
     "eslint-plugin-babel": "^5.1.0",
     "eslint-plugin-react": "^7.8.2",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "gh-pages": "^3.2.3",
     "lodash": "^4.17.21",
     "next": "^7.0.3",
     "next-progressbar": "^1.0.0",
