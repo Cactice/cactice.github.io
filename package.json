@@ -71,6 +71,6 @@
     "react-dom": "^16.8.1",
     "react-no-ssr": "^1.1.0",
     "react-resize-detector": "^2.3.0",
-    "three": "^0.131.1"
+    "three": "^0.137.0"
   }
 }
