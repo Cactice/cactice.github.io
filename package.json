@@ -37,7 +37,7 @@
     "ajv": "^6.9.1",
     "json-loader": "^0.5.7",
     "lottie-web": "^5.4.4",
-    "node-sass": "^6.0.1",
+    "node-sass": "^7.0.0",
     "raw-loader": "^1.0.0",
     "react-bootstrap": "^1.6.1",
     "react-lottie": "^1.2.3",
