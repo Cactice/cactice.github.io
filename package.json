@@ -34,7 +34,7 @@
     "@mdx-js/loader": "^1.6.22",
     "@next/mdx": "^11.0.1",
     "@zeit/next-bundle-analyzer": "^0.1.2",
-    "ajv": "^6.9.1",
+    "ajv": "^6.12.3",
     "json-loader": "^0.5.7",
     "lottie-web": "^5.4.4",
     "node-sass": "^6.0.1",
